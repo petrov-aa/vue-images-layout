@@ -10,6 +10,10 @@
   <body>
     <div class="container">
       <div id="app">
+      </div>
+    </div>
+    <script type="application/x-template" id="images-app-template">
+      <div>
         <div id="images-container" class="images-container" :style="{height: containerHeight}">
           <image-item
           v-for="(image,index) in images"
@@ -43,7 +47,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </script>
     <script type="application/x-template" id="image-item">
       <div @mousedown="mouseDownHandler" class="image" :class="{dragging:dragging}" :style="componentStyle">
         <div class="image_img"><img @dragstart.prevent :src="src" :style="imgStyle"></div>

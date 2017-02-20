@@ -137,6 +137,7 @@ $(function() {
 
   App = new Vue({
     el: "#app",
+    template: "#images-app-template",
     data: {
       images: [
         {
