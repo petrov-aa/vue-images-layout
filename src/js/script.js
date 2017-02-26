@@ -252,7 +252,6 @@ $(function() {
                   src: null,
                   width: 0,
                   height: 0,
-                  orig: null,
                   rotate: 0,
                   busy: true
                 });
@@ -314,8 +313,6 @@ $(function() {
                       } else {
                         tmp.busy = false;
                       }
-
-                      tmp.orig = obj.upload.info.orig;
 
                       this.updateImage(id, tmp);
 

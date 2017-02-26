@@ -121,8 +121,7 @@ function processImage($imgPathTmp, $imgRelativePath) {
     return [
       'width' => $dst_w,
       'height' => $dst_h,
-      'path' => preg_replace('/\\\\/', '/', $imgRelativePath) . '.jpg',
-      'orig' => $imgPathTmp
+      'path' => preg_replace('/\\\\/', '/', $imgRelativePath) . '.jpg'
     ];
   }
 
@@ -141,8 +140,7 @@ function processVideo($videoPathTmp, $videoRelativePath) {
 
   return [
     'status' => $status,
-    'path' => preg_replace('/\\\\/', '/', $videoRelativePath  . '.webm'),
-    'orig' => $videoPathTmp
+    'path' => preg_replace('/\\\\/', '/', $videoRelativePath  . '.webm')
   ];
 
 }
