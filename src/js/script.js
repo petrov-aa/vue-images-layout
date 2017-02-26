@@ -384,7 +384,7 @@ $(function() {
 
           }.bind(this),
 
-          success: function(id) {
+          success: function(id, type) {
 
             return function(data, status, xhr) {
 
@@ -398,7 +398,7 @@ $(function() {
                 src: srcBase + '?' + (new Date()).getTime()
               };
 
-              if (this.images[index].type == 'picture') {
+              if (type == 'picture') {
 
                 tmp.width = response.width;
                 tmp.height = response.height;
@@ -421,7 +421,7 @@ $(function() {
 
             }.bind(this);
 
-          }.bind(this)(this.images[index].id)
+          }.bind(this)(this.images[index].id, this.images[index].type)
 
         });
 
