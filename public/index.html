@@ -19,39 +19,72 @@
           v-for="(image,index) in images"
           :key="image.id"
           :_id="image.id"
+          :type="image.type"
           :src="image.src"
+          :uploading="image.uploading"
+          :progress="image.progress"
+          :busy="image.busy"
           :width="image.width"
           :height="image.height"
           :count="images.length"
           :order="index"
           @changedragging="changeDraggingHander"
-          @moving="imageItemMovingHandler"></image-item>
+          @moving="imageItemMovingHandler"
+          @rotate="rotateHandler"
+          @remove="removeHandler"></image-item>
           <image-placeholder
           v-if="placeholderShown"
           :style="{left: placeholderX + 'px', top: placeholderY + 'px'}"></image-placeholder>
         </div>
         <div class="add-container">
-          <ul>
-            <li>
-              Добавить:
-            </li>
-            <li class="add_picture">
-              <button @click="addHandler('picture')">Изображение</button>
-            </li>
-            <li class="add_video">
-              <button @click="addHandler('video')">Видео</button>
-            </li>
-            <li class="add_youtube">
-              <button @click="addHandler('youtube')">YouTube-видео</button>
-            </li>
-          </ul>
+          <div>
+            <div style="display: none">
+              <form action="/upload.php" id="input_form" enctype="multipart/form-data" method="POST">
+                <input type="file" id="input_file" multiple>
+              </form>
+            </div>
+            <ul>
+              <li>
+                Добавить:
+              </li>
+              <li class="add_picture">
+                <button @click="addHandler('picture')" tabindex="-1">Изображения</button>
+              </li>
+              <li class="add_video">
+                <button @click="addHandler('video')" tabindex="-1">Видео</button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </script>
     <script type="application/x-template" id="image-item">
-      <div @mousedown="mouseDownHandler" class="image" :class="{dragging:dragging}" :style="componentStyle">
-        <div class="image_img"><img @dragstart.prevent :src="src" :style="imgStyle"></div>
-        <div class="image_panel"></div>
+      <div @mousedown="mouseDownHandler" class="image" :class="{dragging: dragging}" :style="componentStyle" :uploading="uploading" :progress="progress">
+        <div class="image_spin" :class="{image_spin_shown: busy || uploading}"></div>
+        <div v-if="type == 'picture' && src != null" class="image_img">
+          <img @dragstart.prevent :src="src" :style="imgStyle">
+        </div>
+        <div v-if="type == 'video' && src != null" class="image_video">
+          <video width="200" height="200" controls preload>
+            <source :src="src" type="video/webm"></source>
+            Ошибка воспроизведения
+          </video>
+        </div>
+        <div class="image_panel">
+          <div v-if="!busy" class="image_panel_center">
+            <div class="image_rotate">
+              <button class="image_rotate_left" @mousedown.stop @click="rotateLeft(order)" tabindex="-1"></button>
+              <button class="image_rotate_right" @mousedown.stop @click="rotateRight(order)" tabindex="-1"></button>
+            </div>
+          </div>
+          <div class="image_panel_right">
+            <button class="image_remove" @mousedown.stop @click="remove(order)" tabindex="-1"></button>
+          </div>
+          <div></div>
+        </div>
+        <div class="image_progress-wrap">
+          <div class="image_progress" :class="{image_progress_shown: uploading}" :style="{width: progressWidth}"></div>
+        </div>
       </div>
     </script>
     <script type="application/x-template" id="image-placeholder">

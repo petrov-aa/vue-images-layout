@@ -1,5 +1,5 @@
-$image_size: 100px;
-$image_spacing: 10px;
+$image_size: 200px;
+$image_spacing: 20px;
 
 * {
   margin: 0;
@@ -33,8 +33,21 @@ html {
       padding: 0 10px;
       border-radius: 10px;
       outline: none;
+      line-height: 30px;
       &:hover {
-        background: rgba(0,0,0,.05);
+        background-color: rgba(0,0,0,.05) !important;
+      }
+    }
+    &.add_picture {
+      button {
+        background: url('/img/picture.png') no-repeat left 10px center;
+        padding-left: 42px;
+      }
+    }
+    &.add_video {
+      button {
+        background: url('/img/video.png') no-repeat left 10px center;
+        padding-left: 42px;
       }
     }
   }
@@ -48,24 +61,123 @@ html {
   height: $image_size;
   width: $image_size;
   border-radius: 5px;
-  overflow: hidden;
-  // transition: left .15s ease-in, top .15s ease-in;
+  background: #000;
   &.dragging {
     transition: none;
+  }
+  &.removed {
+    transition: transform .5s ease-in, opacity .3s ease-in;
+    transform: scale(0.1) .5s ease-in;
+    opacity: 0;
   }
   .image_img {
     position: absolute;
     font-size: 0;
-    background: #000;
+    overflow: hidden;
     width: $image_size;
     height: $image_size;
   }
   .image_panel {
     position: absolute;
-    height: 20px;
+    height: 44px;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.5);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .image_panel_center {
+    text-align: center;
+    button+button {
+      margin-left: 10px;
+    }
+    button {
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: none;
+      outline: none;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  .image_rotate {
+    width: 58px;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+  .image_rotate_left {
+    background: url('/img/rotate-left.png') no-repeat center;
+    float: left;
+  }
+  .image_rotate_right {
+    background: url('/img/rotate-right.png') no-repeat center;
+    float: right;
+  }
+  .image_remove {
+    background: url('/img/cross.png') no-repeat center;
+  }
+  .image_panel_right {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    button {
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: none;
+      outline: none;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  .image_progress-wrap {
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
+    height: 20px;
+  }
+  .image_progress {
+    margin-top: 8px;
+    height: 4px;
+    width: $image_size - 20px;
+    margin-left: 10px;
+    border-radius: 2px;
+    background: white;
+    opacity: 0;
+    transition: opacity .4s ease-out;
+    &.image_progress_shown {
+      transition-timing-function: ease-in;
+      opacity: 1;
+    }
+  }
+  .image_spin {
+    position: absolute;
+    z-index: 100;
+    height: 40px;
+    width: 40px;
+    left: 50%;
+    top: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    border-radius: 5px;
+    background: rgba(0,0,0,.6) url('/img/spin.gif') no-repeat center;
+    opacity: 0;
+    transition: opacity .15s ease-out;
+    &.image_spin_shown {
+      transition-timing-function: ease-in;
+      opacity: 1;
+    }
+  }
+  * {
+    user-select: none;
   }
 }
 .image-placeholder {
